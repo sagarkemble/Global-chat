@@ -15,6 +15,9 @@ app.use(express.static(path.resolve("public")));
 app.get("/", (req, res) => {
   res.sendFile(path.resolve("public/index.html"));
 });
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
 io.attach(server);
 server.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);

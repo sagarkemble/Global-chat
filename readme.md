@@ -1,6 +1,6 @@
 # Simple Chat App (Socket.IO + TypeScript)
 
-A very simple chat app built using Socket.IO and TypeScript. Running on a very basic server, fingers crossed it survives 😅. Multiple users can join around the world, chat, and see who’s online also has GIF support.
+A very simple chat app built using Socket.IO and TypeScript. Running on a very basic server, fingers crossed it survives 😅. Multiple users can join around the world, chat, and see who’s online also has GIF and emoji support.
 
 ## Installation
 

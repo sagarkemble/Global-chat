@@ -3,35 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Chat App</title>
-    <meta name="title" content="Chat App" />
+    <!-- Primary SEO -->
+    <title>Global Chat App | Chat with Users Worldwide</title>
     <meta
       name="description"
-      content="A very simple chat app built using Socket.IO"
+      content="A global real-time chat app where you can chat with users all around the world. Fast, simple, and interactive live communication."
     />
+    <meta
+      name="keywords"
+      content="global chat, realtime chat, socket.io chat, live chat app, online chat worldwide"
+    />
+    <meta name="author" content="Sagar Kemble" />
 
-    <link rel="icon" href="./logo.png" type="image/png" />
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://global-chat-j7ib.onrender.com/logo.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="https://global-chat-j7ib.onrender.com/logo.png"
+    />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Chat App" />
+    <meta property="og:title" content="Global Chat App" />
     <meta
       property="og:description"
-      content="A very simple chat app built using Socket.IO"
+      content="Chat with users all around the world in real time. A shared live experience."
     />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://global-chat-j7ib.onrender.com/" />
     <meta
       property="og:image"
       content="https://global-chat-j7ib.onrender.com/logo.png"
     />
-    <meta property="og:url" content="https://chat.sagarkemble.dev" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Chat App" />
+    <meta name="twitter:title" content="Global Chat App" />
     <meta
       name="twitter:description"
-      content="A very simple chat app built using Socket.IO"
+      content="Join a global real-time chat and connect with users worldwide instantly."
     />
     <meta
       name="twitter:image"
@@ -40,6 +53,12 @@
 
     <!-- Theme -->
     <meta name="theme-color" content="#09090b" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <style>
       *,
       *::before,
@@ -198,7 +217,7 @@
         flex-direction: column;
         height: 100dvh;
         width: 100%;
-        max-width: 620px;
+        max-width: 1024px;
         padding: 0;
         animation: fadeUp 0.3s ease both;
       }
@@ -414,6 +433,7 @@
         gap: 4px;
         scrollbar-width: thin;
         scrollbar-color: var(--border-subtle) transparent;
+        position: relative;
       }
 
       .msg-group {
@@ -547,6 +567,13 @@
         background: var(--bg);
       }
 
+      .input-wrapper {
+        flex: 1;
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
       #messageInput {
         flex: 1;
         background: var(--surface);
@@ -555,7 +582,7 @@
         color: var(--text);
         font-family: var(--font);
         font-size: 14px;
-        padding: 9px 12px;
+        padding: 9px 40px 9px 12px;
         outline: none;
         resize: none;
         transition: border-color 0.15s;
@@ -573,6 +600,29 @@
       }
       #messageInput::placeholder {
         color: var(--text-dim);
+      }
+
+      .emoji-btn-inline {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        line-height: 1;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.5;
+        transition: opacity 0.15s;
+        filter: grayscale(1);
+      }
+      .emoji-btn-inline:hover {
+        opacity: 1;
+        filter: grayscale(0);
       }
 
       .send-btn {
@@ -684,6 +734,7 @@
         bottom: calc(100% + 8px);
         left: 0;
         right: 0;
+        max-width: 400px;
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: var(--radius-lg);
@@ -797,6 +848,35 @@
         border-radius: 10px;
       }
 
+      /* ── Scroll to bottom button ── */
+      .scroll-btn {
+        position: absolute;
+        bottom: 90px;
+        right: 20px;
+        width: 34px;
+        height: 34px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        z-index: 15;
+        transition: background 0.15s;
+        color: var(--text-muted);
+        animation: fadeUp 0.2s ease both;
+      }
+      .scroll-btn:hover {
+        background: var(--border);
+        color: var(--text);
+      }
+      .scroll-btn svg {
+        width: 16px;
+        height: 16px;
+      }
+
       /* ── Animations ── */
       @keyframes fadeUp {
         from {
@@ -866,9 +946,28 @@
     </div>
 
     <!-- ── Chat ── -->
-    <div id="chat-screen">
+    <div id="chat-screen" style="position: relative">
       <div class="chat-header">
-        <div class="online-dot"></div>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style="
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+          "
+        >
+          <circle cx="12" cy="12" r="10" />
+          <line x1="2" y1="12" x2="22" y2="12" />
+          <path
+            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+          />
+        </svg>
         <span class="chat-header-title">Global chat</span>
         <span class="self-badge" id="selfBadge">—</span>
         <div style="position: relative">
@@ -891,6 +990,19 @@
           <span>No messages yet.<br />Say something!</span>
         </div>
       </div>
+
+      <button id="scrollBtn" class="scroll-btn" title="Scroll to latest">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
 
       <div id="typing-area"></div>
 
@@ -923,7 +1035,16 @@
           </div>
         </div>
         <button class="gif-btn" id="gifBtn" title="Send a GIF">GIF</button>
-        <textarea id="messageInput" rows="1" placeholder="Message…"></textarea>
+        <div class="input-wrapper">
+          <textarea
+            id="messageInput"
+            rows="1"
+            placeholder="Message…"
+          ></textarea>
+          <button class="emoji-btn-inline" id="emojiBtn" title="Add emoji">
+            😀
+          </button>
+        </div>
         <button class="send-btn" id="sendButton" title="Send">
           <svg
             viewBox="0 0 24 24"
@@ -941,7 +1062,9 @@
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script>
+    <script type="module">
+      import { EmojiButton } from "https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.4/dist/index.js";
+
       // ── Palette for avatars ──
       const COLORS = [
         "#e11d48",
@@ -987,8 +1110,33 @@
       const gifPanel = document.getElementById("gifPanel");
       const gifGrid = document.getElementById("gifGrid");
       const gifSearch = document.getElementById("gifSearch");
+      const emojiBtn = document.getElementById("emojiBtn");
 
       const GIPHY_KEY = "zshit28vOjtQd312n72sXlEQij3M7jRT";
+
+      // ── Emoji picker ──
+      const picker = new EmojiButton({
+        theme: "dark",
+        style: "native",
+        position: "top-start",
+        autoHide: true,
+        autoFocusSearch: false,
+      });
+
+      picker.on("emoji", (selection) => {
+        const start = messageInput.selectionStart;
+        const end = messageInput.selectionEnd;
+        const text = messageInput.value;
+        messageInput.value =
+          text.substring(0, start) + selection.emoji + text.substring(end);
+        messageInput.selectionStart = messageInput.selectionEnd =
+          start + selection.emoji.length;
+        messageInput.focus();
+      });
+
+      emojiBtn.addEventListener("click", () => {
+        picker.togglePicker(emojiBtn);
+      });
 
       // ── State ──
       let socket = null;
@@ -1129,6 +1277,24 @@
         });
       }
 
+      // ── Scroll tracking ──
+      let isAtBottom = true;
+      const scrollBtn = document.getElementById("scrollBtn");
+
+      messagesEl.addEventListener("scroll", () => {
+        isAtBottom =
+          messagesEl.scrollHeight -
+            messagesEl.scrollTop -
+            messagesEl.clientHeight <
+          60;
+        scrollBtn.style.display = isAtBottom ? "none" : "flex";
+      });
+
+      scrollBtn.addEventListener("click", () => {
+        scrollBtn.style.display = "none";
+        scrollToBottom();
+      });
+
       function addMessage(userName, payload, isSelf) {
         const empty = document.getElementById("emptyState");
         if (empty) empty.remove();
@@ -1178,11 +1344,14 @@
           group.appendChild(bubble);
         }
 
-        scrollToBottom();
+        if (isSelf || isAtBottom) {
+          scrollToBottom();
+        } else {
+          scrollBtn.style.display = "flex";
+        }
       }
 
       function scrollToBottom() {
-        // Double rAF ensures DOM has fully painted before measuring scrollHeight
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             messagesEl.scrollTo({
